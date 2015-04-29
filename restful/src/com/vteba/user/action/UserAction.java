@@ -2,10 +2,12 @@ package com.vteba.user.action;
 
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.vteba.user.model.User;
+import com.vteba.user.service.UserServiceImpl;
 
 /**
  * 用户控制类
@@ -18,12 +20,15 @@ import com.vteba.user.model.User;
 @RequestMapping("/user")
 public class UserAction {
 	
+	@Autowired
+	private UserServiceImpl userServiceImpl;
+	
 	@RequestMapping("/save")
 	public String save() {
 		User user = new User();
 		user.setName("userName1");
 		user.setCreateDate(new Date());
-		
+		userServiceImpl.save(user);
 		return "user/list";
 	}
 	
