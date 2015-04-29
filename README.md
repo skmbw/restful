@@ -1,0 +1,2 @@
+# restful
+基于resteasy实现的restful webservice。和spring mvc结合起来使用。部署在tomcat和jboss中都可以。jboss中包含了部分restful的基础jar。
