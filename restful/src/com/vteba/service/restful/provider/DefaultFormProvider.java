@@ -21,16 +21,23 @@ import org.apache.commons.io.IOUtils;
 import com.alibaba.fastjson.JSON;
 import com.vteba.user.model.User;
 
-@Named
-@Provider
-@Consumes(value = { MediaType.APPLICATION_FORM_URLENCODED })
-@Produces(value = { MediaType.APPLICATION_JSON })
+/**
+ * 表单类型的提交的数据解析器。接受表单post提交。返回json数据。
+ * 
+ * @author yinlei
+ * @see
+ * @since 2015年4月30日 上午10:26:23
+ */
+@Named// 表示一个bean
+@Provider// 表示是一个数据解析提供者
+@Consumes(value = { MediaType.APPLICATION_FORM_URLENCODED })// 接受表单类型的数据
+@Produces(value = { MediaType.APPLICATION_JSON })// 产生json格式的数据
 public class DefaultFormProvider implements MessageBodyReader<Object>, MessageBodyWriter<Object> {
 
 	@Override
 	public boolean isWriteable(Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType) {
-		
+		// 这里一般要做一些限制，根据mediaType，等参数
 		return true;
 	}
 
@@ -41,6 +48,7 @@ public class DefaultFormProvider implements MessageBodyReader<Object>, MessageBo
 		return -1L;
 	}
 
+	// 产生json数据给调用端
 	@Override
 	public void writeTo(Object t, Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType,
@@ -55,16 +63,17 @@ public class DefaultFormProvider implements MessageBodyReader<Object>, MessageBo
 	@Override
 	public boolean isReadable(Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType) {
-		
+		// 一般要做验证
 		return true;
 	}
 
+	// 从客户端提交的数据，解析数据
 	@Override
 	public Object readFrom(Class<Object> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType,
 			MultivaluedMap<String, String> httpHeaders, InputStream entityStream)
 			throws IOException, WebApplicationException {
-		
+		// 这里只是简单的处理了，更通用的做法是 要能够处理任何类型。
 		User user = new User();
 		
 		String content = IOUtils.toString(entityStream);

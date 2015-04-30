@@ -28,8 +28,8 @@ import com.vteba.user.service.UserServiceImpl;
  * @see
  * @since 2015年4月29日 上午10:16:58
  */
-@Named
-@Path("/user")
+@Named// 表示是一个bean，受spring管理
+@Path("/user")// 映射路径
 public class UserRestService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserRestService.class);
 	
