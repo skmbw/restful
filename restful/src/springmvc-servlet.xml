@@ -48,20 +48,23 @@
 <!--                     <property name="prefix" value="/WEB-INF/jsp/"/> -->
 <!--                     <property name="suffix" value=".jsp"/> -->
 <!--                 </bean> -->
-                <ref bean="jspViewResolver"/>
-                <ref bean="freeMarkerViewResolver"/>
+<!--                 <ref bean="jspViewResolver"/> -->
+<!--                 <ref bean="freeMarkerViewResolver"/> -->
+					<ref bean="defaultMultiViewResolver"/>
             </list>
         </property>
     </bean>
 
 	<bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
-		<!-- 设置为true以忽略对Accept Header的支持，将从路径扩展名上去取-->  
-        <!-- 扩展名至mimeType的映射,即 /user.json => application/json -->  
-        <property name="favorPathExtension" value="false"/>       
-        <!-- 用于开启 /userinfo/123?format=json 的支持 -->  
-        <property name="favorParameter" value="true"/>
+		<property name="defaultContentType" value="text/html;charset=UTF-8"/>
+		<!-- 设置为true以忽略对Accept Header的支持，将从路径扩展名上去取-->
+        <!-- 扩展名至mimeType的映射,即 /user.json => application/json -->
+        <property name="favorPathExtension" value="false"/>
+        <!-- 用于开启 /userinfo/123?format=json 的支持 -->
+        <property name="favorParameter" value="false"/>
         <!-- 不忽略Accept Header，和favorPathExtension相反 -->
         <property name="ignoreAcceptHeader" value="false" />
+        <!-- 根据请求的文件扩展名，确定media types，要配合favorPathExtension使用，值为true -->
 		<property name="mediaTypes">
 			<props>
 				<prop key="html">text/html</prop>
@@ -71,7 +74,7 @@
 		</property>
 	</bean>
 
-	<bean id="viewResolver" class="com.vteba.web.servlet.view.DefaultMultiViewResolver">
+	<bean id="defaultMultiViewResolver" class="com.vteba.web.servlet.view.DefaultMultiViewResolver">
         <property name="viewResolverMap">
             <map>
             	<entry key=".jsp" value-ref="jspViewResolver"/>
@@ -102,7 +105,8 @@
     <!--  FreeMarker ViewResolver Configuration -->
     <bean id="freeMarkerViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">  
         <property name="order" value="1" />
-        <property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>  
+        <property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>
+        <property name="contentType" value="text/html;charset=UTF-8"/>
     </bean> 
     
     
