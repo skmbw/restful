@@ -3,6 +3,7 @@ package com.vteba.user.rest;
 import java.util.Date;
 
 import javax.inject.Named;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -13,6 +14,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vteba.user.model.User;
@@ -28,11 +31,12 @@ import com.vteba.user.service.UserServiceImpl;
 @Named
 @Path("/user")
 public class UserRestService {
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserRestService.class);
 	
 	@Autowired
 	private UserServiceImpl userServiceImpl;
 	
-	@GET
+	@GET// 用于查询
 	@Path("/detail/{userId}")// 包含路径参数
 	@Produces(value = { MediaType.APPLICATION_JSON })// 返回Json格式的数据
 	public User get(@PathParam("userId") Long userId) {// 获取路径参数作为入参
@@ -46,20 +50,22 @@ public class UserRestService {
 		return user;
 	}
 	
-	@POST
+	@POST// 一般用于添加
 	@Path("/add")
 	public Response add(User user) {
-		
+		LOGGER.info("收到参数user.id=[{}], user.name=[{}]", user.getId(), user.getName());
 		return Response.ok().build();
 	}
 	
-	@PUT
+	@PUT// 一般用于修改，浏览器没有提供put方法，所以要用jquery，提供的模拟方法
 	@Path("/update")
-	public Response update() {
+	@Consumes(value = { MediaType.APPLICATION_JSON })// 接受json类型的数据
+	public Response update(User user) {
+		LOGGER.info("收到参数user.id=[{}], user.name=[{}]", user.getId(), user.getName());
 		return Response.ok().build();
 	}
 	
-	@DELETE
+	@DELETE// 一般用于删除
 	@Path("/delete/{userId}")
 	public Response delete(@PathParam("userId") Long userId) {
 		

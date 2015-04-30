@@ -22,7 +22,7 @@
     	<level value="INFO"/>
     </logger> 
     <logger name="com.vteba" additivity="true">
-    	<level value="WARN"/>
+    	<level value="INFO"/>
     </logger>
     <logger name="com.vteba.tx" additivity="true">
     	<level value="INFO"/>
