@@ -3,11 +3,11 @@ package com.vteba.user.model;
 import java.util.Date;
 
 /**
- * ÓÃ»§ÊµÌåÀà
+ * ç”¨æˆ·å®ä½“ç±»
  * 
  * @author yinlei
  * @see
- * @since 2015Äê4ÔÂ28ÈÕ ÉÏÎç10:21:41
+ * @since 2015å¹´4æœˆ28æ—¥ ä¸Šåˆ10:21:41
  */
 public class User {
 	private Long id;

@@ -10,11 +10,11 @@ import com.vteba.user.model.User;
 import com.vteba.user.service.UserServiceImpl;
 
 /**
- * ÓÃ»§¿ØÖÆÀà
+ * ç”¨æˆ·æ§åˆ¶ç±»
  * 
  * @author yinlei
  * @see
- * @since 2015Äê4ÔÂ28ÈÕ ÉÏÎç10:20:49
+ * @since 2015å¹´4æœˆ28æ—¥ ä¸Šåˆ10:20:49
  */
 @Controller
 @RequestMapping("/user")

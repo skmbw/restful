@@ -22,24 +22,24 @@ import com.vteba.user.model.User;
 import com.vteba.user.service.UserServiceImpl;
 
 /**
- * resteasyÊµÏÖµÄrestful webservice·şÎñ
+ * resteasyå®ç°çš„restful webserviceæœåŠ¡
  * 
  * @author yinlei
  * @see
- * @since 2015Äê4ÔÂ29ÈÕ ÉÏÎç10:16:58
+ * @since 2015å¹´4æœˆ29æ—¥ ä¸Šåˆ10:16:58
  */
-@Named// ±íÊ¾ÊÇÒ»¸öbean£¬ÊÜspring¹ÜÀí
-@Path("/user")// Ó³ÉäÂ·¾¶
+@Named// è¡¨ç¤ºæ˜¯ä¸€ä¸ªbeanï¼Œå—springç®¡ç†
+@Path("/user")// æ˜ å°„è·¯å¾„
 public class UserRestService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserRestService.class);
 	
 	@Autowired
 	private UserServiceImpl userServiceImpl;
 	
-	@GET// ÓÃÓÚ²éÑ¯
-	@Path("/detail/{userId}")// °üº¬Â·¾¶²ÎÊı
-	@Produces(value = { MediaType.APPLICATION_JSON })// ·µ»ØJson¸ñÊ½µÄÊı¾İ
-	public User get(@PathParam("userId") Long userId) {// »ñÈ¡Â·¾¶²ÎÊı×÷ÎªÈë²Î
+	@GET// ç”¨äºæŸ¥è¯¢
+	@Path("/detail/{userId}")// åŒ…å«è·¯å¾„å‚æ•°
+	@Produces(value = { MediaType.APPLICATION_JSON })// è¿”å›Jsonæ ¼å¼çš„æ•°æ®
+	public User get(@PathParam("userId") Long userId) {// è·å–è·¯å¾„å‚æ•°ä½œä¸ºå…¥å‚
 		User user = new User();
 		user.setId(11L);
 		user.setName("yinlei");
@@ -50,22 +50,22 @@ public class UserRestService {
 		return user;
 	}
 	
-	@POST// Ò»°ãÓÃÓÚÌí¼Ó
+	@POST// ä¸€èˆ¬ç”¨äºæ·»åŠ 
 	@Path("/add")
 	public Response add(User user) {
-		LOGGER.info("ÊÕµ½²ÎÊıuser.id=[{}], user.name=[{}]", user.getId(), user.getName());
+		LOGGER.info("æ”¶åˆ°å‚æ•°user.id=[{}], user.name=[{}]", user.getId(), user.getName());
 		return Response.ok().build();
 	}
 	
-	@PUT// Ò»°ãÓÃÓÚĞŞ¸Ä£¬ä¯ÀÀÆ÷Ã»ÓĞÌá¹©put·½·¨£¬ËùÒÔÒªÓÃjquery£¬Ìá¹©µÄÄ£Äâ·½·¨
+	@PUT// ä¸€èˆ¬ç”¨äºä¿®æ”¹ï¼Œæµè§ˆå™¨æ²¡æœ‰æä¾›putæ–¹æ³•ï¼Œæ‰€ä»¥è¦ç”¨jqueryï¼Œæä¾›çš„æ¨¡æ‹Ÿæ–¹æ³•
 	@Path("/update")
-	@Consumes(value = { MediaType.APPLICATION_JSON })// ½ÓÊÜjsonÀàĞÍµÄÊı¾İ
+	@Consumes(value = { MediaType.APPLICATION_JSON })// æ¥å—jsonç±»å‹çš„æ•°æ®
 	public Response update(User user) {
-		LOGGER.info("ÊÕµ½²ÎÊıuser.id=[{}], user.name=[{}]", user.getId(), user.getName());
+		LOGGER.info("æ”¶åˆ°å‚æ•°user.id=[{}], user.name=[{}]", user.getId(), user.getName());
 		return Response.ok().build();
 	}
 	
-	@DELETE// Ò»°ãÓÃÓÚÉ¾³ı
+	@DELETE// ä¸€èˆ¬ç”¨äºåˆ é™¤
 	@Path("/delete/{userId}")
 	public Response delete(@PathParam("userId") Long userId) {
 		

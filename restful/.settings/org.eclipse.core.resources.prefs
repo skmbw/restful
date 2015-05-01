@@ -1,2 +1,6 @@
 eclipse.preferences.version=1
+encoding//src/com/vteba/service/context/listener/SpringContextLoaderListener.java=UTF-8
+encoding//src/com/vteba/service/json/jaxrs/ClassKey.java=UTF-8
+encoding//src/com/vteba/service/json/jaxrs/FastJsonProvider.java=UTF-8
 encoding//src/com/vteba/web/servlet/view/DefaultMultiViewResolver.java=UTF-8
+encoding/<project>=UTF-8

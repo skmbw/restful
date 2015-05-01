@@ -20,25 +20,24 @@ import org.apache.commons.io.IOUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.vteba.user.model.User;
-import com.vteba.utils.charstr.StringUtils;
 
 /**
- * ±íµ¥ÀàĞÍµÄÌá½»µÄÊı¾İ½âÎöÆ÷¡£½ÓÊÜ±íµ¥postÌá½»¡£·µ»ØjsonÊı¾İ¡£
+ * è¡¨å•ç±»å‹çš„æäº¤çš„æ•°æ®è§£æå™¨ã€‚æ¥å—è¡¨å•postæäº¤ã€‚è¿”å›jsonæ•°æ®ã€‚
  * 
  * @author yinlei
  * @see
- * @since 2015Äê4ÔÂ30ÈÕ ÉÏÎç10:26:23
+ * @since 2015å¹´4æœˆ30æ—¥ ä¸Šåˆ10:26:23
  */
-@Named// ±íÊ¾Ò»¸öbean
-@Provider// ±íÊ¾ÊÇÒ»¸öÊı¾İ½âÎöÌá¹©Õß
-@Consumes(value = { MediaType.APPLICATION_FORM_URLENCODED })// ½ÓÊÜ±íµ¥ÀàĞÍµÄÊı¾İ
-@Produces(value = { MediaType.APPLICATION_JSON })// ²úÉújson¸ñÊ½µÄÊı¾İ
+@Named// è¡¨ç¤ºä¸€ä¸ªbean
+@Provider// è¡¨ç¤ºæ˜¯ä¸€ä¸ªæ•°æ®è§£ææä¾›è€…
+@Consumes(value = { MediaType.APPLICATION_FORM_URLENCODED })// æ¥å—è¡¨å•ç±»å‹çš„æ•°æ®
+@Produces(value = { MediaType.APPLICATION_JSON })// äº§ç”Ÿjsonæ ¼å¼çš„æ•°æ®
 public class DefaultFormProvider implements MessageBodyReader<Object>, MessageBodyWriter<Object> {
 
 	@Override
 	public boolean isWriteable(Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType) {
-		// ÕâÀïÒ»°ãÒª×öÒ»Ğ©ÏŞÖÆ£¬¸ù¾İmediaType£¬µÈ²ÎÊı
+		// è¿™é‡Œä¸€èˆ¬è¦åšä¸€äº›é™åˆ¶ï¼Œæ ¹æ®mediaTypeï¼Œç­‰å‚æ•°
 		return true;
 	}
 
@@ -49,7 +48,7 @@ public class DefaultFormProvider implements MessageBodyReader<Object>, MessageBo
 		return -1L;
 	}
 
-	// ²úÉújsonÊı¾İ¸øµ÷ÓÃ¶Ë
+	// äº§ç”Ÿjsonæ•°æ®ç»™è°ƒç”¨ç«¯
 	@Override
 	public void writeTo(Object t, Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType,
@@ -64,17 +63,17 @@ public class DefaultFormProvider implements MessageBodyReader<Object>, MessageBo
 	@Override
 	public boolean isReadable(Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType) {
-		// Ò»°ãÒª×öÑéÖ¤
+		// ä¸€èˆ¬è¦åšéªŒè¯
 		return true;
 	}
 
-	// ´Ó¿Í»§¶ËÌá½»µÄÊı¾İ£¬½âÎöÊı¾İ
+	// ä»å®¢æˆ·ç«¯æäº¤çš„æ•°æ®ï¼Œè§£ææ•°æ®
 	@Override
 	public Object readFrom(Class<Object> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType,
 			MultivaluedMap<String, String> httpHeaders, InputStream entityStream)
 			throws IOException, WebApplicationException {
-		// ÕâÀïÖ»ÊÇ¼òµ¥µÄ´¦ÀíÁË£¬¸üÍ¨ÓÃµÄ×ö·¨ÊÇ ÒªÄÜ¹»´¦ÀíÈÎºÎÀàĞÍ¡£
+		// è¿™é‡Œåªæ˜¯ç®€å•çš„å¤„ç†äº†ï¼Œæ›´é€šç”¨çš„åšæ³•æ˜¯ è¦èƒ½å¤Ÿå¤„ç†ä»»ä½•ç±»å‹ã€‚
 		User user = new User();
 		
 		String content = IOUtils.toString(entityStream);
@@ -100,7 +99,7 @@ public class DefaultFormProvider implements MessageBodyReader<Object>, MessageBo
 	}
 
 	public static String buildJson(String content) {
-		if (StringUtils.hasText(content)) {
+		if (content != null && !content.equals("")) {
 			StringBuilder json = new StringBuilder("{");
 			boolean append = false;
 			String[] forms = content.split("&");
@@ -111,7 +110,7 @@ public class DefaultFormProvider implements MessageBodyReader<Object>, MessageBo
 						String key = args[0];
 						String value = args[1];
 						if (key != null && value != null) {
-							if (key.indexOf(".") > -1) {// º¬ÓĞ¶à¼¶ÊôĞÔ
+							if (key.indexOf(".") > -1) {// å«æœ‰å¤šçº§å±æ€§
 								
 							} else {
 							}

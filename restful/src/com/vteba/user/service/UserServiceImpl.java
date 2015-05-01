@@ -11,7 +11,7 @@ public class UserServiceImpl {
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 	
 	public Long save(User user) {
-		LOGGER.debug("±£¥Êuser=[{}].", user);
+		LOGGER.debug("‰øùÂ≠òuser=[{}].", user);
 		return 21L;
 	}
 }
