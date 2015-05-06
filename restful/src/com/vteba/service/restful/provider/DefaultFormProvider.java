@@ -104,25 +104,103 @@ public class DefaultFormProvider implements MessageBodyReader<Object>, MessageBo
 			boolean append = false;
 			String[] forms = content.split("&");
 			if (forms != null) {
+				
+				JsonObject jsonObject = new JsonObject();
 				for (String form : forms) {
 					String[] args = form.split("=");
 					if (args != null && args.length == 2) {
 						String key = args[0];
 						String value = args[1];
 						if (key != null && value != null) {
-							if (key.indexOf(".") > -1) {// 含有多级属性
-								
-							} else {
-							}
-							if (!append) {
-								json.append("\"").append(key).append("\":\"").append(value).append("\"");
-								append = true;
-							} else {
-								json.append(",\"").append(key).append("\":\"").append(value).append("\"");
+							int dotIndex = key.indexOf(".");
+							if (dotIndex > -1) {// 含有多级属性
+								int arrayIndex = key.indexOf("[");
+								if (arrayIndex > -1) {// 数组或者list
+									String prefix = key.substring(0, dotIndex - 3);
+									String current = key.substring(dotIndex - 2, dotIndex - 1);
+									
+									Element element = jsonObject.get(prefix);
+									NodeObject nodeObject = null;
+									if (element == null) {
+										element = new Element();
+										element.setArray(true);
+										element.setCurrent(current);
+										nodeObject = new NodeObject();
+										element.add(nodeObject);
+										
+										jsonObject.add(prefix, element);
+									} else if (!current.equals(element.getCurrent())) {
+										element.setCurrent(current);
+										nodeObject = new NodeObject();
+										element.add(nodeObject);
+									} else {
+										nodeObject = element.getCurrentNode();
+									}
+									
+									Node node = new Node();
+									String name = key.substring(dotIndex + 1);
+									node.setName(name);
+									node.setValue(value);
+									nodeObject.add(node);
+								} else {// 多级属性，但是不是list
+									String prefix = key.substring(0, dotIndex);
+									
+									Element element = jsonObject.get(prefix);
+									NodeObject nodeObject = null;
+									if (element == null) {
+										element = new Element();
+										nodeObject = new NodeObject();
+										element.add(nodeObject);
+										
+										jsonObject.add(prefix, element);
+									} else {
+										nodeObject = element.getCurrentNode();
+									}
+									
+									Node node = new Node();
+									String name = key.substring(dotIndex + 1);
+									node.setName(name);
+									node.setValue(value);
+									nodeObject.add(node);
+								}
+							} else {// 无级联属性
+								int arrayIndex = key.indexOf("[");// 基本类型数组
+								if (arrayIndex > -1) {
+									String prefix = key.substring(0, arrayIndex);
+									
+									Element element = jsonObject.get(prefix);
+									NodeObject nodeObject = null;
+									if (element == null) {
+										element = new Element();
+										element.setArray(true);
+										nodeObject = new NodeObject();
+										nodeObject.setPrimitive(true);
+										element.add(nodeObject);
+										
+										jsonObject.add(prefix, element);
+									} else {
+										nodeObject = element.getNodeList().get(0);
+									}
+									
+									Node node = new Node();
+									node.setValue(value);
+									node.setPrimitive(true);
+									nodeObject.add(node);
+								} else {// 普通键值对
+									if (!append) {
+										json.append("\"").append(key).append("\":\"").append(value).append("\"");
+										append = true;
+									} else {
+										json.append(",\"").append(key).append("\":\"").append(value).append("\"");
+									}
+								}
 							}
 						}
 					}
 				}
+				
+				json.append(jsonObject.toString());
+				
 			}
 			return json.append("}").toString();
 		}
@@ -145,8 +223,9 @@ public class DefaultFormProvider implements MessageBodyReader<Object>, MessageBo
 		User user = JSON.parseObject(text.toString(), User.class);
 		System.out.println(user);
 		long d = System.currentTimeMillis();
-		String content = "id=22&name=yinlei&createDate=2015-04-30 14:22:17";
+		String content = "user.id=66&user.name=yinleiaa&strList[0]=aa&strList[1]=bb&id=22&name=yinlei&userList[0].id=33&createDate=2015-04-30 14:22:17&userList[0].name=yinlei2&userList[0].createDate=2015-5-1 14:28:11&userList[1].id=44&userList[1].name=yinlei3&userList[1].createDate=2015-2-4 14:28:11";
 		content = buildJson(content);
+		System.out.println(content);
 		user = JSON.parseObject(content, User.class);
 		System.out.println(System.currentTimeMillis() - d);
 	}
