@@ -100,7 +100,8 @@ public class DefaultFormProvider implements MessageBodyReader<Object>, MessageBo
 
 	public static String buildJson(String content) {
 		if (content != null && !content.equals("")) {
-			StringBuilder json = new StringBuilder("{");
+			StringBuilder json = new StringBuilder();
+			//boolean array = true;
 			boolean append = false;
 			String[] forms = content.split("&");
 			if (forms != null) {
@@ -121,20 +122,25 @@ public class DefaultFormProvider implements MessageBodyReader<Object>, MessageBo
 									
 									Element element = jsonObject.get(prefix);
 									NodeObject nodeObject = null;
-									if (element == null) {
+									if (element == null) {// 新出现的节点，创建
 										element = new Element();
 										element.setArray(true);
-										element.setCurrent(current);
-										nodeObject = new NodeObject();
+										//element.setCurrent(current);
+										nodeObject = new NodeObject(current);
 										element.add(nodeObject);
 										
 										jsonObject.add(prefix, element);
-									} else if (!current.equals(element.getCurrent())) {
-										element.setCurrent(current);
-										nodeObject = new NodeObject();
-										element.add(nodeObject);
+									//} else if (!current.equals(element.getCurrent())) {
 									} else {
-										nodeObject = element.getCurrentNode();
+										nodeObject = element.getNodeObject(current);
+										if (nodeObject == null) {
+											//element.setCurrent(current);
+											nodeObject = new NodeObject(current);
+											element.add(nodeObject);
+										}
+//										else {
+//											nodeObject = element.getCurrentNode();
+//										}
 									}
 									
 									Node node = new Node();
@@ -143,8 +149,8 @@ public class DefaultFormProvider implements MessageBodyReader<Object>, MessageBo
 									node.setValue(value);
 									nodeObject.add(node);
 								} else {// 多级属性，但是不是list
+									//array = false;
 									String prefix = key.substring(0, dotIndex);
-									
 									Element element = jsonObject.get(prefix);
 									NodeObject nodeObject = null;
 									if (element == null) {
@@ -187,6 +193,7 @@ public class DefaultFormProvider implements MessageBodyReader<Object>, MessageBo
 									node.setPrimitive(true);
 									nodeObject.add(node);
 								} else {// 普通键值对
+									//array = false;
 									if (!append) {
 										json.append("\"").append(key).append("\":\"").append(value).append("\"");
 										append = true;
@@ -198,11 +205,19 @@ public class DefaultFormProvider implements MessageBodyReader<Object>, MessageBo
 						}
 					}
 				}
-				
 				json.append(jsonObject.toString());
-				
 			}
-			return json.append("}").toString();
+//			if (array) {
+//				json.replace(0, 1, "{").append("}");
+//			} else {
+//				json.insert(0, "{").append("}");
+//			}
+			if (json.charAt(0) == ',') {
+				json.replace(0, 1, "{").append("}");
+			} else {
+				json.insert(0, "{").append("}");
+			}
+			return json.toString();
 		}
 		return null;
 	}
@@ -223,7 +238,40 @@ public class DefaultFormProvider implements MessageBodyReader<Object>, MessageBo
 		User user = JSON.parseObject(text.toString(), User.class);
 		System.out.println(user);
 		long d = System.currentTimeMillis();
-		String content = "user.id=66&user.name=yinleiaa&strList[0]=aa&strList[1]=bb&id=22&name=yinlei&userList[0].id=33&createDate=2015-04-30 14:22:17&userList[0].name=yinlei2&userList[0].createDate=2015-5-1 14:28:11&userList[1].id=44&userList[1].name=yinlei3&userList[1].createDate=2015-2-4 14:28:11";
+		// 测试1
+		String content = "userList[1].name=yinlei3&user.id=66&user.name=yinleiaa&strList[0]=aa&id=22&name=yinlei&userList[0].id=33&createDate=2015-04-30 14:22:17&userList[0].name=yinlei2&userList[0].createDate=2015-5-1 14:28:11&userList[1].id=44&userList[1].createDate=2015-2-4 14:28:11&strList[1]=bb";
+		content = buildJson(content);
+		System.out.println(content);
+		user = JSON.parseObject(content, User.class);
+		System.out.println(System.currentTimeMillis() - d);
+		
+		// 测试2
+		d = System.currentTimeMillis();
+		content = "userList[1].name=yinlei3&strList[0]=aa&userList[0].id=33&userList[0].name=yinlei2&userList[0].createDate=2015-5-1 14:28:11&userList[1].id=44&userList[1].createDate=2015-2-4 14:28:11&strList[1]=bb";
+		content = buildJson(content);
+		System.out.println(content);
+		user = JSON.parseObject(content, User.class);
+		System.out.println(System.currentTimeMillis() - d);
+		
+		// 测试3
+		d = System.currentTimeMillis();
+		content = "userList[1].name=yinlei3&userList[0].id=33&userList[0].name=yinlei2&userList[0].createDate=2015-5-1 14:28:11&userList[1].id=44&userList[1].createDate=2015-2-4 14:28:11";
+		content = buildJson(content);
+		System.out.println(content);
+		user = JSON.parseObject(content, User.class);
+		System.out.println(System.currentTimeMillis() - d);
+		
+		// 测试4
+		d = System.currentTimeMillis();
+		content = "user.id=66&user.name=yinleiaa&user.createDate=2015-04-30 14:22:17";
+		content = buildJson(content);
+		System.out.println(content);
+		user = JSON.parseObject(content, User.class);
+		System.out.println(System.currentTimeMillis() - d);
+		
+		// 测试5
+		d = System.currentTimeMillis();
+		content = "id=22&name=yinlei&createDate=2015-04-30 14:22:17";
 		content = buildJson(content);
 		System.out.println(content);
 		user = JSON.parseObject(content, User.class);

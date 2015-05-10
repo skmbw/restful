@@ -11,6 +11,15 @@ import java.util.List;
 public class NodeObject {
 	private boolean primitive;// 基本类型数组，不需要使用{}
 	private List<Node> nodeList = new ArrayList<Node>();
+	private String index;
+
+	public NodeObject() {
+	}
+	
+	public NodeObject(String index) {
+		super();
+		this.index = index;
+	}
 
 	public List<Node> getNodeList() {
 		return nodeList;
@@ -30,6 +39,14 @@ public class NodeObject {
 
 	public void setPrimitive(boolean primitive) {
 		this.primitive = primitive;
+	}
+
+	public String getIndex() {
+		return index;
+	}
+
+	public void setIndex(String index) {
+		this.index = index;
 	}
 
 	@Override

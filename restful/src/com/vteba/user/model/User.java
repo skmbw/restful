@@ -1,6 +1,7 @@
 package com.vteba.user.model;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 用户实体类
@@ -13,6 +14,9 @@ public class User {
 	private Long id;
 	private String name;
 	private Date createDate;
+	private List<User> userList;
+	private List<String> strList;
+	private User user;
 
 	public Long getId() {
 		return id;
@@ -36,6 +40,30 @@ public class User {
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+	}
+
+	public List<User> getUserList() {
+		return userList;
+	}
+
+	public void setUserList(List<User> userList) {
+		this.userList = userList;
+	}
+
+	public List<String> getStrList() {
+		return strList;
+	}
+
+	public void setStrList(List<String> strList) {
+		this.strList = strList;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }
