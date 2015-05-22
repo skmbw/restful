@@ -1,31 +1,31 @@
-1¡¢restfulµÄÈë¿ÚÊÇUserRestServcie.java
+1ã€restfulçš„å…¥å£æ˜¯UserRestServcie.java
 
-2¡¢¶ÔÓ¦µÄ²âÊÔ·½·¨·Ö±ğÊÇ
-http://localhost:8090/restful/add.jsp£¬²âÊÔÌí¼ÓµÄ(@POST)
+2ã€å¯¹åº”çš„æµ‹è¯•æ–¹æ³•åˆ†åˆ«æ˜¯
+http://localhost:8090/restful/add.jspï¼Œæµ‹è¯•æ·»åŠ çš„(@POST)
 http://localhost:8090/restful/index.jsp
-Ò³ÃæÖĞµÄ ¸üĞÂºÍÉ¾³ı°´Å¥²âÊÔ  ¸üĞÂ(@UPDATE)ºÍÉ¾³ı£¨@DELETE£©µÄ
+é¡µé¢ä¸­çš„ æ›´æ–°å’Œåˆ é™¤æŒ‰é’®æµ‹è¯•  æ›´æ–°(@UPDATE)å’Œåˆ é™¤ï¼ˆ@DELETEï¼‰çš„
 
-Ö®ËùÒÔĞ´Ç°ÃæÈı¸ö·½·¨£¬ÊÇÒòÎª ä¯ÀÀÆ÷£¬Ò»°ãÃ»ÓĞÊµÏÖupdateºÍdelete·½·¨£¬postÒ²Òª±íµ¥Ìá½»¡£
-ËùÒÔÍ¨ÓÃµÄ×ö·¨ÊÇ Ê¹ÓÃjqueryµÈjs¿ò¼ÜÄ£Äâ¡£»òÕßÖ±½ÓÊ¹ÓÃ ApacheµÄ httpclientµÈÀ´²Ù×÷¡£
-restful webservice£¬ÊÇÌá¹©ÒµÎñµÄ
+ä¹‹æ‰€ä»¥å†™å‰é¢ä¸‰ä¸ªæ–¹æ³•ï¼Œæ˜¯å› ä¸º æµè§ˆå™¨ï¼Œä¸€èˆ¬æ²¡æœ‰å®ç°updateå’Œdeleteæ–¹æ³•ï¼Œpostä¹Ÿè¦è¡¨å•æäº¤ã€‚
+æ‰€ä»¥é€šç”¨çš„åšæ³•æ˜¯ ä½¿ç”¨jqueryç­‰jsæ¡†æ¶æ¨¡æ‹Ÿã€‚æˆ–è€…ç›´æ¥ä½¿ç”¨ Apacheçš„ httpclientç­‰æ¥æ“ä½œã€‚
+restful webserviceï¼Œæ˜¯æä¾›ä¸šåŠ¡çš„
 
-²éÑ¯£¨@GET£©£¬Ö±½ÓÔÚä¯ÀÀÆ÷ÖĞhttp://localhost:8090/restful/rest/user/detail/2
+æŸ¥è¯¢ï¼ˆ@GETï¼‰ï¼Œç›´æ¥åœ¨æµè§ˆå™¨ä¸­http://localhost:8090/restful/rest/user/detail/2
 
-3¡¢ºÍspring mvc»¹ÓĞspring ½áºÏºóÔÚweb.xmlÖĞÅäÖÃÉÔÓĞ±ä»¯
-Ô­À´µÄlistener±äÁË£¬ÓÃÏÂÃæµÄ´úÌæ
-<!-- resteasyÆô¶¯³õÊ¼»¯¼àÌıÆ÷ -->
+3ã€å’Œspring mvcè¿˜æœ‰spring ç»“åˆååœ¨web.xmlä¸­é…ç½®ç¨æœ‰å˜åŒ–
+åŸæ¥çš„listenerå˜äº†ï¼Œç”¨ä¸‹é¢çš„ä»£æ›¿
+<!-- resteasyå¯åŠ¨åˆå§‹åŒ–ç›‘å¬å™¨ -->
 	<listener>
       	<listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class> 
    	</listener>
-   	<!-- resteasyºÍspringÕûºÏ£¬ÓĞÁËÕâ¸ö£¬ContextLoaderListener¾Í²»ÒªÁË  -->
+   	<!-- resteasyå’Œspringæ•´åˆï¼Œæœ‰äº†è¿™ä¸ªï¼ŒContextLoaderListenerå°±ä¸è¦äº†  -->
 	<listener>
 		<listener-class>com.vteba.service.context.listener.SpringContextLoaderListener</listener-class>
   	</listener>
 
-4¡¢Õâ¸öÊÇÅäÖÃresteasy À¹½Ø urlµÄ£¬ÎªÁËºÍspring mvcÇø·Ö£¬Ò»°ãÒªÌí¼ÓÒ»¸öÇ°×º
+4ã€è¿™ä¸ªæ˜¯é…ç½®resteasy æ‹¦æˆª urlçš„ï¼Œä¸ºäº†å’Œspring mvcåŒºåˆ†ï¼Œä¸€èˆ¬è¦æ·»åŠ ä¸€ä¸ªå‰ç¼€
 	
-<!-- ÒªÖ¸¶¨Ç°×º·ñÔòºÍspring mvcµÄurl-pattern³åÍ»¡£»¹ÓĞÒ»ÖÖ½â¾ö°ì·¨¾ÍÊÇ½«spring mvcºÍreseasyÕûºÏÔÚÒ»Æğ
-		tomcatÖĞĞèÒªÕâ¸ö£¬jbossÖĞ¾ÍÒª×¢ÊÍµôÁË
+<!-- è¦æŒ‡å®šå‰ç¼€å¦åˆ™å’Œspring mvcçš„url-patternå†²çªã€‚è¿˜æœ‰ä¸€ç§è§£å†³åŠæ³•å°±æ˜¯å°†spring mvcå’Œreseasyæ•´åˆåœ¨ä¸€èµ·
+		tomcatä¸­éœ€è¦è¿™ä¸ªï¼Œjbossä¸­å°±è¦æ³¨é‡Šæ‰äº†
 	 -->
 	<servlet>
       	<servlet-name>resteasy</servlet-name>
@@ -41,15 +41,15 @@ restful webservice£¬ÊÇÌá¹©ÒµÎñµÄ
       	<url-pattern>/rest/*</url-pattern>t
    	</servlet-mapping>
    	
-5¡¢ºÍspring mvcÕûºÏ£¬»¹ÒªÔÙ springµÄÖ÷ÅäÖÃÎÄ¼şapplication-context.xmlÖĞÒıÈë 
+5ã€å’Œspring mvcæ•´åˆï¼Œè¿˜è¦å† springçš„ä¸»é…ç½®æ–‡ä»¶application-context.xmlä¸­å¼•å…¥ 
 <!-- Import basic SpringMVC Resteasy integration -->
     <import resource="classpath:springmvc-resteasy.xml"/>
-Õâ¸öÅäÖÃÎÄ¼ş£¬°üº¬ÔÚresteasy-spring-3.0.11.Final.jarÖĞ
+è¿™ä¸ªé…ç½®æ–‡ä»¶ï¼ŒåŒ…å«åœ¨resteasy-spring-3.0.11.Final.jarä¸­
 
-6¡¢ÎÒÕâÀï·µ»ØºÍ½ÓÊÜjsonµÄÊı¾İ£¬Ê¹ÓÃfastjsonÀ´ÊµÏÖ£¬
-ÔÚapplication-context.xmlÖĞ£¬ÓĞÅäÖÃ
+6ã€æˆ‘è¿™é‡Œè¿”å›å’Œæ¥å—jsonçš„æ•°æ®ï¼Œä½¿ç”¨fastjsonæ¥å®ç°ï¼Œ
+åœ¨application-context.xmlä¸­ï¼Œæœ‰é…ç½®
 <bean id="fastjsonProvider" class="com.vteba.service.json.jaxrs.FastJsonProvider"></bean>
 
-Ò»°ã£¬resteasy»áÊ¹ÓÃjacksonµÄÌá¹©Õß¡£ÎÒ×öÁËÌæ»»¡£ĞÔÄÜºÃÒ»Ğ©¡£
+ä¸€èˆ¬ï¼Œresteasyä¼šä½¿ç”¨jacksonçš„æä¾›è€…ã€‚æˆ‘åšäº†æ›¿æ¢ã€‚æ€§èƒ½å¥½ä¸€äº›ã€‚
 
-7¡¢½«ÏîÄ¿µ¼Èëµ½eclipseÖĞ£¬Æô¶¯tomcat¿ÉÒÔµ÷ÊÔÁË¡£
+7ã€å°†é¡¹ç›®å¯¼å…¥åˆ°eclipseä¸­ï¼Œå¯åŠ¨tomcatå¯ä»¥è°ƒè¯•äº†ã€‚
